@@ -1,0 +1,61 @@
+<mat-card style="margin:0px auto; margin-top: 20px;">
+    <mat-card-header>
+      <mat-card-title>Pokedex</mat-card-title>
+      <span class="example-spacer"></span>
+      <mat-form-field class="search" floatLabel="always">
+          <mat-label>Nombre del Pokemon</mat-label>
+          <input matInput [formControl]="search" (keydown.enter)="onSearchPokemon()" placeholder="Ingrese nombre o Nro del Pokemon">
+      </mat-form-field>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="mat-elevation-z8" style="padding: 10px;">
+
+          <div class="row justify-content-center" *ngIf="isLoading">
+            <div class="col-12">
+              <mat-progress-spinner
+              [diameter]="70"
+              style="margin:0 auto;"
+              class="example-margin"
+              color="primary"
+              mode="indeterminate">
+              </mat-progress-spinner>
+            </div>
+          </div>
+
+          <div *ngIf="!isSearching" class="row pokemon__list" (scroll)="onScroll($event)">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3" *ngFor="let pokemon of pokemones" (click)="onDetail(pokemon)">
+                <div style="cursor: pointer;"  class="card {{'bg-color-'+ getPrincipalType(pokemon.types) + '-light'}}">
+                    <div class="card__info">
+                        <h2 class="color-white">{{pokemon.name}}</h2>
+                        <span class="color-white" *ngFor="let type of pokemon.types">{{type.type.name}}</span>
+                    </div>
+                    <div class="card__img">
+                        <img *ngIf="classicMode" [src]="pokemon.sprites?.front_default" [alt]="pokemon.name">
+                        <img *ngIf="!classicMode" src="https://projectpokemon.org/images/normal-sprite/{{pokemon.name}}.gif" [alt]="searchPokemon.name">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="isSearching" class="pokemon__list" (scroll)="onScroll($event)">
+          <div  (click)="onDetail(searchPokemon)" class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+              <div style="cursor: pointer;" class="card {{'bg-color-'+getPrincipalType(searchPokemon.types) +'-light'}}">
+                  <div class="card__info">
+                      <h2 class="color-white">{{searchPokemon.name}}</h2>
+                      <span class="color-white" *ngFor="let type of searchPokemon.types">{{type.type.name}}</span>                    
+                  </div>
+                  <div class="card__img">
+                      <img *ngIf="classicMode" [src]="searchPokemon.sprites?.front_default" [alt]="searchPokemon.name">
+                      <img *ngIf="!classicMode" src="https://projectpokemon.org/images/normal-sprite/{{searchPokemon.name}}.gif" [alt]="searchPokemon.name">
+                  </div>
+              </div>
+          </div>
+      </div> 
+
+
+
+
+        </div>
+    </mat-card-content>
+  </mat-card>
+

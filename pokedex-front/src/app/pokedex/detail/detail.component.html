@@ -1,0 +1,82 @@
+<h3 mat-dialog-title style="font-size: 13px !important; padding-bottom: 0px; border-bottom: 1px solid green; color: green; text-transform: uppercase;">POKEMON: <strong style="color:#000;">{{pokemon.name}}</strong></h3>
+<mat-dialog-content class="mat-typography">
+
+    <div class="sheet__img">
+        <img *ngIf="classicMode" [src]="pokemon.sprites?.front_default" [alt]="pokemon.name">
+        <img *ngIf="!classicMode" src="https://projectpokemon.org/images/normal-sprite/{{pokemon.name}}.gif" [alt]="pokemon.name">
+    </div>
+    
+    <mat-tab-group class="sheet">
+        <mat-tab label="Características">
+            <div class="sheet__tab">
+                <div class="sheet__item">
+                    <div class="color-gray sheet__item_label">Alto: </div>
+                    <div class="color-gray sheet__item_label">Ancho: </div>
+                    <div class="color-gray sheet__item_label">Habilidades: </div>
+                </div>
+                <div class="sheet__item">
+                    <div>{{pokemon.height}}</div>
+                    <div>{{pokemon.weight}}</div>
+                    <div>{{getAbilities()}}</div>
+                </div>
+            </div>
+        </mat-tab>
+    
+        <mat-tab label="Niveles">
+            <div class="sheet__tab">
+                <div class="sheet__item w-100">
+                    <div class="sheet__progress w-100">
+                        <div class="w-20 color-gray sheet__item_label">HP:</div>
+                        <div class="w-80">
+                            <app-progress-bar [color]="getPrincipalType(pokemon.types)" [value]="pokemon.stats[5].base_stat"></app-progress-bar>
+                        </div>
+                    </div>
+    
+                    <div class="sheet__progress w-100">
+                        <div class="w-20 color-gray sheet__item_label">Ataque: </div>
+                        <div class="w-80">
+                            <app-progress-bar [color]="getPrincipalType(pokemon.types)" [value]="pokemon.stats[4].base_stat"></app-progress-bar>
+                        </div>
+                    </div>
+    
+                    <div class="sheet__progress w-100">
+                        <div class="w-20 color-gray sheet__item_label">Defensa:</div>
+                        <div class="w-80">
+                            <app-progress-bar [color]="getPrincipalType(pokemon.types)" [value]="pokemon.stats[3].base_stat"></app-progress-bar>
+                        </div>
+                    </div>
+    
+                    <div class="sheet__progress w-100">
+                        <div class="w-20 color-gray sheet__item_label">Sp. Ataque:</div>
+                        <div class="w-80">
+                            <app-progress-bar [color]="getPrincipalType(pokemon.types)" [value]="pokemon.stats[2].base_stat"></app-progress-bar>
+                        </div>
+                    </div>
+    
+                    <div class="sheet__progress w-100">
+                        <div class="w-20 color-gray sheet__item_label">Sp. Defensa:</div>
+                        <div class="w-80">
+                            <app-progress-bar [color]="getPrincipalType(pokemon.types)" [value]="pokemon.stats[1].base_stat"></app-progress-bar>
+                        </div>
+                    </div>
+    
+                    <div class="sheet__progress w-100">
+                        <div class="w-20 color-gray sheet__item_label">Velocidad:</div>
+                        <div class="w-80">
+                            <app-progress-bar [color]="getPrincipalType(pokemon.types)" [value]="pokemon.stats[0].base_stat"></app-progress-bar>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </mat-tab>
+    
+    </mat-tab-group>
+    
+
+    
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close color="primary"> Cerrar</button>
+</mat-dialog-actions>
